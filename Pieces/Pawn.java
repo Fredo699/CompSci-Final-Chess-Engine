@@ -1,6 +1,5 @@
 package chessfinalproject.Pieces;
 
-import chessfinalproject.Game;
 import chessfinalproject.Utils;
 import java.util.ArrayList;
 
