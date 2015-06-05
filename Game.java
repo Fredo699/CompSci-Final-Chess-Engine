@@ -28,4 +28,11 @@ public class Game
 			}
 		
 		}
+	
+	public Game(Piece[][] board)
+		{
+		current_board = board;
+		}
+	
+	
 	}

@@ -2,7 +2,7 @@ package chessfinalproject;
 
 public class Utils
 	{
-	public static int[] algebraic_to_cartesian(String algebraic)
+	public static int[] smith_to_cartesian(String algebraic)
 		{
 		int[] cartesian = {0,0};
 		
@@ -15,7 +15,7 @@ public class Utils
 		return cartesian;
 		}
 	
-	public static String cartesian_to_algebraic(int[] cartesian)
+	public static String cartesian_to_smith(int[] cartesian)
 		{
 		String algebraic = "";
 		
