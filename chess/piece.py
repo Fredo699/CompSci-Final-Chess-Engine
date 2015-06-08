@@ -35,18 +35,25 @@ class Piece:
 		else:
 			return "Error: No piece type defined for object #" + id(self)
 	
-	def get_pawn_moves(self, board):
+	def get_pawn_moves(self, game):
 		moves = []
 		coords = algebraic_to_cartesian(self.position)
-		av1 = cartesian_to_algebraic([coords[0] - 1, coords[1] + 1])
-		av2 = cartesian_to_algebraic([coords[0] + 1, coords[1] + 1])
-		av3 = cartesian_to_algebraic([coords[0], coords[1] + 1])
+		if self.color == "white":
+			av1 = cartesian_to_algebraic([coords[0] - 1, coords[1] + 1])
+			av2 = cartesian_to_algebraic([coords[0] + 1, coords[1] + 1])
+			av3 = cartesian_to_algebraic([coords[0], coords[1] + 1])
+		if self.color == "black":
+			av1 = cartesian_to_algebraic([coords[0] - 1, coords[1] - 1])
+			av2 = cartesian_to_algebraic([coords[0] + 1, coords[1] - 1])
+			av3 = cartesian_to_algebraic([coords[0], coords[1] - 1])
+			
+		# av = "attack vector"
 		
-		if board.piece_at(av3).piece_type == "Null":
+		if game.piece_at(av3).piece_type == "Null":
 			moves.append(self.position +  av3)
-		if board.piece_at(av1).color != "Null" and board.piece_at(av1).color != self.color:
+		if game.piece_at(av1).color != "Null" and game.piece_at(av1).color != self.color:
 			moves.append(self.position + av1)
-		if board.piece_at(av2).color != "Null" and board.piece_at(av2).color != self.color:
+		if game.piece_at(av2).color != "Null" and game.piece_at(av2).color != self.color:
 			moves.append(self.position + av2)
 		
 		return moves

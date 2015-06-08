@@ -28,5 +28,4 @@ class Game:
 	
 	def piece_at(self, position):
 		target = algebraic_to_cartesian(position)
-		print(target)
 		return self.current_board[target[0]][target[1]]
