@@ -95,3 +95,37 @@ class Piece:
 				break
 
 		return moves
+		
+	def get_bishop_moves(self, game):
+		moves = []
+		coords = algebraic_to_cartesian(self.position)
+		
+		for i in range(1,8):
+			if coords[1] + i > 7 or coords[0] + i > 7 or game.piece_at(cartesian_to_algebraic([coords[0] + i, coords[1] + i])).color == self.color:
+				break
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + i, coords[1] + i]))
+			if game.piece_at(cartesian_to_algebraic([coords[0] + i, coords[1] + i])).piece_type != "Null":
+				break
+		
+		for i in range(1,8):
+			if coords[1] - i < 0 or coords[0] - i < 0 or game.piece_at(cartesian_to_algebraic([coords[0] - i, coords[1] - i])).color == self.color:
+				break
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - i, coords[1] - i]))
+			if game.piece_at(cartesian_to_algebraic([coords[0] - i, coords[1] - i])).piece_type != "Null":
+				break
+		
+		for i in range(1,8):
+			if coords[0] + i > 7 or coords[1] - i < 0 or game.piece_at(cartesian_to_algebraic([coords[0] + i, coords[1] - i])).color == self.color:
+				break
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + i, coords[1] - i]))
+			if game.piece_at(cartesian_to_algebraic([coords[0] + i, coords[1] - i])).piece_type != "Null":
+				break
+		
+		for i in range(1,8):
+			if coords[0] - i < 0 or coords[1] + i > 7 or game.piece_at(cartesian_to_algebraic([coords[0] - i, coords[1] + i])).color == self.color:
+				break
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - i, coords[1] + i]))
+			if game.piece_at(cartesian_to_algebraic([coords[0] - i, coords[1] + i])).piece_type != "Null":
+				break
+
+		return moves
