@@ -55,5 +55,43 @@ class Piece:
 			moves.append(self.position + av1)
 		if game.piece_at(av2).color != "Null" and game.piece_at(av2).color != self.color:
 			moves.append(self.position + av2)
+		if coords[1] == 1:
+			moves.append(self.position + cartesian_to_algebraic([coords[0], 3]))
+		if coords[1] == 6:
+			moves.append(self.position + cartesian_to_algebraic([coords[0], 4]))
 		
+		return moves
+	
+	def get_rook_moves(self, game):
+		moves = []
+		coords = algebraic_to_cartesian(self.position)
+		
+		for i in range(1,8):
+			if coords[1] + i > 7 or game.piece_at(cartesian_to_algebraic([coords[0], coords[1] + i])).color == self.color:
+				break
+			moves.append(self.position + cartesian_to_algebraic([coords[0], coords[1] + i]))
+			if game.piece_at(cartesian_to_algebraic([coords[0], coords[1] + i])).piece_type != "Null":
+				break
+		
+		for i in range(1,8):
+			if coords[1] - i < 0 or game.piece_at(cartesian_to_algebraic([coords[0], coords[1] - i])).color == self.color:
+				break
+			moves.append(self.position + cartesian_to_algebraic([coords[0], coords[1] - i]))
+			if game.piece_at(cartesian_to_algebraic([coords[0], coords[1] - i])).piece_type != "Null":
+				break
+		
+		for i in range(1,8):
+			if coords[0] + i > 7 or game.piece_at(cartesian_to_algebraic([coords[0] + i, coords[1]])).color == self.color:
+				break
+			moves.append(self.position + cartesian_to_algebraic([coords[0]+ i, coords[1]]))
+			if game.piece_at(cartesian_to_algebraic([coords[0] + i, coords[1]])).piece_type != "Null":
+				break
+		
+		for i in range(1,8):
+			if coords[0] - i < 0 or game.piece_at(cartesian_to_algebraic([coords[0] - i, coords[1]])).color == self.color:
+				break
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - i, coords[1]]))
+			if game.piece_at(cartesian_to_algebraic([coords[0] - i, coords[1]])).piece_type != "Null":
+				break
+
 		return moves

@@ -4,6 +4,7 @@ from chess.utils import *
 class Game:
 	current_board = [[Piece("Null", "Null", "Null") for x in range(8)] for x in range(8)]
 	def __init__(self):
+		'''
 		self.current_board[0][0] = Piece("rook", "white", "a1")
 		self.current_board[1][0] = Piece("knight", "white", "b1")
 		self.current_board[2][0] = Piece("bishop", "white", "c1")
@@ -25,7 +26,10 @@ class Game:
 		for i in range(0,8):
 			self.current_board[i][1] = Piece("pawn", "white", cartesian_to_algebraic([i, 1]))
 			self.current_board[i][6] = Piece("pawn", "black", cartesian_to_algebraic([i, 6]))
-	
+			
+		'''
+		self.current_board[4][3] = Piece("rook", "white", "e4")
+		
 	def piece_at(self, position):
 		target = algebraic_to_cartesian(position)
 		return self.current_board[target[0]][target[1]]

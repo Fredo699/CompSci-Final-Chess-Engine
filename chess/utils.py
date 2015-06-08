@@ -58,3 +58,5 @@ def render_board(board):
 		
 		art = art + "\n"
 	print(art)
+
+#Movement utils
