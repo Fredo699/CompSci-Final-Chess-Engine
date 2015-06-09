@@ -1,5 +1,5 @@
-from chess.piece import Piece
 from chess.utils import *
+from chess.piece import *
 
 class Game:
 	current_board = [[Piece("Null", "Null", "Null") for x in range(8)] for x in range(8)]
@@ -26,11 +26,22 @@ class Game:
 		for i in range(0,8):
 			self.current_board[i][1] = Piece("pawn", "white", cartesian_to_algebraic([i, 1]))
 			self.current_board[i][6] = Piece("pawn", "black", cartesian_to_algebraic([i, 6]))
-			
 		'''
 		
-		self.current_board[4][3] = Piece("knight", "white", "e4")
+		self.current_board[4][3] = Piece("king", "white", "e4")
+		self.current_board[4][4] = Piece("knight", "white", "e5")
+		self.current_board[4][5] = Piece("queen", "black", "e6")
 		
 	def piece_at(self, position):
 		target = algebraic_to_cartesian(position)
 		return self.current_board[target[0]][target[1]]
+	
+	def move_piece(self, action):
+		start_square = action[:2]
+		end_square = action[2:]
+		
+		start_square = algebraic_to_cartesian(start_square)
+		end_square = algebraic_to_cartesian(end_square)
+		
+		self.current_board[end_square[0]][end_square[1]] = self.piece_at(action[:2])
+		self.current_board[start_square[0]][start_square[1]] = Piece("Null", "Null", "Null")

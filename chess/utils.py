@@ -55,9 +55,10 @@ def render_board(game):
 					art = art + "q "
 			
 			else:
-				art = art + "* "
+				art = art + ". "
 		
-		art = art + "\n"
+		art = art + " " + str(8 - i) + "\n"
 	print(art)
+	print("a b c d e f g h ")
 
 #Movement utils

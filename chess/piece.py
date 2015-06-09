@@ -4,6 +4,7 @@ Piece module for Computer Science chess final project
 Contains all methods related to piece movement 
 '''
 from chess.utils import *
+from chess.game import *
 
 class Piece:
 	piece_type = "Null"
@@ -34,6 +35,27 @@ class Piece:
 		
 		else:
 			return "Error: No piece type defined for object #" + id(self)
+	
+	
+	def illegal_moves(self, game, moves_list):
+		moves = []
+		
+		tmp_game = Game()
+		tmp_game.current_board = game.current_board
+		
+		for k in tmp_game.current_board:
+			if k.piece_type == "king":
+				king_position = k.position
+				break
+		
+		for m in moves_list:
+			tmp_game.move_piece(m)
+			for p in tmp_game.current_board:
+				if p.color != self.color and p.position + king_position in p.get_moves(tmp_game):
+					moves.append(m)
+					break
+		
+		return moves
 	
 	def get_pawn_moves(self, game):
 		moves = []
