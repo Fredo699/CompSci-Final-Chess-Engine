@@ -4,7 +4,6 @@ from chess.piece import *
 class Game:
 	current_board = [[Piece("Null", "Null", "Null") for x in range(8)] for x in range(8)]
 	def __init__(self):
-		'''
 		self.current_board[0][0] = Piece("rook", "white", "a1")
 		self.current_board[1][0] = Piece("knight", "white", "b1")
 		self.current_board[2][0] = Piece("bishop", "white", "c1")
@@ -26,22 +25,48 @@ class Game:
 		for i in range(0,8):
 			self.current_board[i][1] = Piece("pawn", "white", cartesian_to_algebraic([i, 1]))
 			self.current_board[i][6] = Piece("pawn", "black", cartesian_to_algebraic([i, 6]))
-		'''
-		
-		self.current_board[4][3] = Piece("king", "white", "e4")
-		self.current_board[4][4] = Piece("knight", "white", "e5")
-		self.current_board[4][5] = Piece("queen", "black", "e6")
 		
 	def piece_at(self, position):
 		target = algebraic_to_cartesian(position)
 		return self.current_board[target[0]][target[1]]
 	
 	def move_piece(self, action):
-		start_square = action[:2]
-		end_square = action[2:]
+		try:
+			start_square = action[:2]
+			end_square = action[2:]
+			
+			start_square = algebraic_to_cartesian(start_square)
+			end_square = algebraic_to_cartesian(end_square)
+			
+			self.current_board[end_square[0]][end_square[1]] = self.piece_at(action[:2])
+			self.current_board[start_square[0]][start_square[1]] = Piece("Null", "Null", "Null")
 		
-		start_square = algebraic_to_cartesian(start_square)
-		end_square = algebraic_to_cartesian(end_square)
+		except Exception as e:
+			print("\n" + str(e) + "\n")
+	
+	def illegal_moves(self, moves_list, color):
+		moves = []
 		
-		self.current_board[end_square[0]][end_square[1]] = self.piece_at(action[:2])
-		self.current_board[start_square[0]][start_square[1]] = Piece("Null", "Null", "Null")
+		tmp_game = Game()
+		tmp_game.current_board = self.current_board
+		
+		for i in range(0, 8):
+			for k in tmp_game.current_board[i]:
+				if k.piece_type == "king" and k.color == color:
+					king_position = k.position
+					print(k.position)
+					break
+		
+		for m in moves_list:
+			tmp_game.move_piece(m)
+			render_board(tmp_game)
+			for i in range(0, 8):
+				for p in tmp_game.current_board[i]:
+					if p.piece_type != "Null":
+						print(p.get_moves(tmp_game))
+					if p.color != color and str(p.position + king_position) in p.get_moves(tmp_game):
+						moves.append(m)
+						break
+			tmp_game.move_piece(m[2:] + m[:2])
+		
+		return moves

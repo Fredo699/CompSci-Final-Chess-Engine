@@ -54,6 +54,37 @@ def render_board(game):
 				if board[j][7 - i].piece_type == "queen":
 					art = art + "q "
 			
+			if board[j][7 - i].color == "white":
+				if board[j][7 - i].piece_type == "pawn":
+					art = art + "♙ "
+				if board[j][7 - i].piece_type == "rook":
+					art = art + "♖ "
+				if board[j][7 - i].piece_type == "knight":
+					art = art + "♘ "
+				if board[j][7 - i].piece_type == "bishop":
+					art = art + "♗ "
+				if board[j][7 - i].piece_type == "king":
+					art = art + "♔ "
+				if board[j][7 - i].piece_type == "queen":
+					art = art + "♕ "
+			
+			'''
+			elif board[j][7 - i].color == "black":
+				if board[j][7 - i].piece_type == "pawn":
+					art = art + "♟ "
+				if board[j][7 - i].piece_type == "rook":
+					art = art + "♜ "
+				if board[j][7 - i].piece_type == "knight":
+					art = art + "♞ "
+				if board[j][7 - i].piece_type == "bishop":
+					art = art + "♝ "
+				if board[j][7 - i].piece_type == "king":
+					art = art + "♚ "
+				if board[j][7 - i].piece_type == "queen":
+					art = art + "♛ "
+			
+			'''
+			
 			else:
 				art = art + ". "
 		

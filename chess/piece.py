@@ -4,7 +4,6 @@ Piece module for Computer Science chess final project
 Contains all methods related to piece movement 
 '''
 from chess.utils import *
-from chess.game import *
 
 class Piece:
 	piece_type = "Null"
@@ -34,26 +33,7 @@ class Piece:
 			return self.get_king_moves(board)
 		
 		else:
-			return "Error: No piece type defined for object #" + id(self)
-	
-	
-	def illegal_moves(self, game, moves_list):
-		moves = []
-		
-		tmp_game = Game()
-		tmp_game.current_board = game.current_board
-		
-		for k in tmp_game.current_board:
-			if k.piece_type == "king":
-				king_position = k.position
-				break
-		
-		for m in moves_list:
-			tmp_game.move_piece(m)
-			for p in tmp_game.current_board:
-				if p.color != self.color and p.position + king_position in p.get_moves(tmp_game):
-					moves.append(m)
-					break
+			return []
 		
 		return moves
 	
@@ -71,15 +51,15 @@ class Piece:
 			
 		# av = "attack vector"
 		
-		if game.piece_at(av3).piece_type == "Null":
+		if game.piece_at(av3).color == "Null":
 			moves.append(self.position +  av3)
 		if game.piece_at(av1).color != "Null" and game.piece_at(av1).color != self.color:
 			moves.append(self.position + av1)
 		if game.piece_at(av2).color != "Null" and game.piece_at(av2).color != self.color:
 			moves.append(self.position + av2)
-		if coords[1] == 1:
+		if self.color == "white" and coords[1] == 1 and game.piece_at(av3).piece_type == "Null" and game.piece_at(cartesian_to_algebraic([coords[0], coords[1] + 2])).piece_type == "Null":
 			moves.append(self.position + cartesian_to_algebraic([coords[0], 3]))
-		if coords[1] == 6:
+		if self.color == "black" and coords[1] == 6 and game.piece_at(av3).piece_type == "Null" and game.piece_at(cartesian_to_algebraic([coords[0], coords[1] - 2])).piece_type == "Null":
 			moves.append(self.position + cartesian_to_algebraic([coords[0], 4]))
 		
 		return moves
@@ -162,21 +142,44 @@ class Piece:
 		coords = algebraic_to_cartesian(self.position)
 		moves = []
 		
-		if coords[0] + 2 < 7 and coords[1] + 1 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 2, coords[1] + 1])):
+		if coords[0] + 2 <= 7 and coords[1] + 1 <= 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 2, coords[1] + 1])).color != self.color:
 			moves.append(self.position + cartesian_to_algebraic([coords[0] + 2, coords[1] + 1]))
-		if coords[0] + 1 < 7 and coords[1] + 2 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1] + 2])):
+		if coords[0] + 1 <= 7 and coords[1] + 2 <= 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1] + 2])).color != self.color:
 			moves.append(self.position + cartesian_to_algebraic([coords[0] + 1, coords[1] + 2]))
-		if coords[0] - 1 < 7 and coords[1] + 2 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1] + 2])):
+		if coords[0] - 1 >= 0 and coords[1] + 2 <= 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1] + 2])).color != self.color:
 			moves.append(self.position + cartesian_to_algebraic([coords[0] - 1, coords[1] + 2]))
-		if coords[0] - 2 < 7 and coords[1] + 1 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 2, coords[1] + 1])):
+		if coords[0] - 2 >= 0 and coords[1] + 1 <= 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 2, coords[1] + 1])).color != self.color:
 			moves.append(self.position + cartesian_to_algebraic([coords[0] - 2, coords[1] + 1]))
-		if coords[0] + 2 < 7 and coords[1] - 1 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 2, coords[1] - 1])):
+		if coords[0] + 2 <= 7 and coords[1] - 1 >= 0 and game.piece_at(cartesian_to_algebraic([coords[0] + 2, coords[1] - 1])).color != self.color:
 			moves.append(self.position + cartesian_to_algebraic([coords[0] + 2, coords[1] - 1]))
-		if coords[0] + 1 < 7 and coords[1] - 2 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1] - 2])):
+		if coords[0] + 1 <= 7 and coords[1] - 2 >= 0 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1] - 2])).color != self.color:
 			moves.append(self.position + cartesian_to_algebraic([coords[0] + 1, coords[1] - 2]))
-		if coords[0] - 1 < 7 and coords[1] - 2 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1] - 2])):
+		if coords[0] - 1 >= 0 and coords[1] - 2 >= 0 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1] - 2])).color != self.color:
 			moves.append(self.position + cartesian_to_algebraic([coords[0] - 1, coords[1] - 2]))
-		if coords[0] - 2 < 7 and coords[1] - 1 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 2, coords[1] - 1])):
+		if coords[0] - 2 >= 0 and coords[1] - 1 >= 0 and game.piece_at(cartesian_to_algebraic([coords[0] - 2, coords[1] - 1])).color != self.color:
 			moves.append(self.position + cartesian_to_algebraic([coords[0] - 2, coords[1] - 1]))
 			
+		return moves
+	
+	def get_king_moves(self, game):
+		coords = algebraic_to_cartesian(self.position)
+		moves = []
+		
+		if coords[0] + 1 <= 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1]])).color != self.color:
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + 1, coords[1]]))
+		if coords[1] + 1 <= 7 and game.piece_at(cartesian_to_algebraic([coords[0], coords[1] + 1])).color != self.color:
+			moves.append(self.position + cartesian_to_algebraic([coords[0], coords[1] + 1]))
+		if coords[0] - 1 >= 0 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1]])).color != self.color:
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - 1, coords[1]]))
+		if coords[1] - 1 >= 0 and game.piece_at(cartesian_to_algebraic([coords[0], coords[1] - 1])).color != self.color:
+			moves.append(self.position + cartesian_to_algebraic([coords[0], coords[1] - 1]))
+		if coords[0] + 1 <= 7 and coords[1] + 1 <= 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1] + 1])).color != self.color:
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + 1, coords[1] + 1]))
+		if coords[0] - 1 >= 0 and coords[1] + 1 <= 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1] + 1])).color != self.color:
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - 1, coords[1] + 1]))
+		if coords[0] + 1 <= 7 and coords[1] - 1 >= 0 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1] - 1])).color != self.color:
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + 1, coords[1] - 1]))
+		if coords[0] - 1 >= 0 and coords[1] - 1 >= 0 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1] - 1])).color != self.color:
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - 1, coords[1] - 1]))
+		
 		return moves
