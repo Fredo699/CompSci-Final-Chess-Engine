@@ -129,3 +129,32 @@ class Piece:
 				break
 
 		return moves
+	
+	def get_queen_moves(self, game):
+		bish_moves = self.get_bishop_moves(game)
+		rook_moves = self.get_rook_moves(game)
+		
+		return bish_moves + rook_moves
+		
+	def get_knight_moves(self, game):
+		coords = algebraic_to_cartesian(self.position)
+		moves = []
+		
+		if coords[0] + 2 < 7 and coords[1] + 1 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 2, coords[1] + 1])):
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + 2, coords[1] + 1]))
+		if coords[0] + 1 < 7 and coords[1] + 2 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1] + 2])):
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + 1, coords[1] + 2]))
+		if coords[0] - 1 < 7 and coords[1] + 2 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1] + 2])):
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - 1, coords[1] + 2]))
+		if coords[0] - 2 < 7 and coords[1] + 1 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 2, coords[1] + 1])):
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - 2, coords[1] + 1]))
+		if coords[0] + 2 < 7 and coords[1] - 1 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 2, coords[1] - 1])):
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + 2, coords[1] - 1]))
+		if coords[0] + 1 < 7 and coords[1] - 2 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] + 1, coords[1] - 2])):
+			moves.append(self.position + cartesian_to_algebraic([coords[0] + 1, coords[1] - 2]))
+		if coords[0] - 1 < 7 and coords[1] - 2 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 1, coords[1] - 2])):
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - 1, coords[1] - 2]))
+		if coords[0] - 2 < 7 and coords[1] - 1 < 7 and game.piece_at(cartesian_to_algebraic([coords[0] - 2, coords[1] - 1])):
+			moves.append(self.position + cartesian_to_algebraic([coords[0] - 2, coords[1] - 1]))
+			
+		return moves
