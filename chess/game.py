@@ -54,19 +54,27 @@ class Game:
 			for k in tmp_game.current_board[i]:
 				if k.piece_type == "king" and k.color == color:
 					king_position = k.position
-					print(k.position)
 					break
 		
 		for m in moves_list:
 			tmp_game.move_piece(m)
-			render_board(tmp_game)
 			for i in range(0, 8):
 				for p in tmp_game.current_board[i]:
-					if p.piece_type != "Null":
-						print(p.get_moves(tmp_game))
 					if p.color != color and str(p.position + king_position) in p.get_moves(tmp_game):
 						moves.append(m)
 						break
 			tmp_game.move_piece(m[2:] + m[:2])
+		
+		return moves
+	
+	def get_all_moves(self, color):
+		moves = []
+		for i in range(0, 8):
+			for p in self.current_board[i]:
+				if p.color == color:
+					moves = moves + p.get_moves(self)
+		
+		rejected_moves = self.illegal_moves(moves, color)
+		moves = [x for x in moves if x not in rejected_moves]
 		
 		return moves

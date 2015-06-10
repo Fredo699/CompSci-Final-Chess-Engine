@@ -53,10 +53,15 @@ class Piece:
 		
 		if game.piece_at(av3).color == "Null":
 			moves.append(self.position +  av3)
-		if game.piece_at(av1).color != "Null" and game.piece_at(av1).color != self.color:
-			moves.append(self.position + av1)
-		if game.piece_at(av2).color != "Null" and game.piece_at(av2).color != self.color:
-			moves.append(self.position + av2)
+		try:
+			if game.piece_at(av1).color != "Null" and game.piece_at(av1).color != self.color:
+				moves.append(self.position + av1)
+			if game.piece_at(av2).color != "Null" and game.piece_at(av2).color != self.color:
+				moves.append(self.position + av2)
+		
+		except:
+			pass
+			
 		if self.color == "white" and coords[1] == 1 and game.piece_at(av3).piece_type == "Null" and game.piece_at(cartesian_to_algebraic([coords[0], coords[1] + 2])).piece_type == "Null":
 			moves.append(self.position + cartesian_to_algebraic([coords[0], 3]))
 		if self.color == "black" and coords[1] == 6 and game.piece_at(av3).piece_type == "Null" and game.piece_at(cartesian_to_algebraic([coords[0], coords[1] - 2])).piece_type == "Null":
