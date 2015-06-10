@@ -37,6 +37,10 @@ class Game:
 		return self.current_board[target[0]][target[1]]
 	
 	def move_piece(self, action):
+		'''
+		
+		For purposes of presentation, I have commented out the defunct castling code.
+		
 		if action == "e1g1" and self.castle_white[0]:
 			self.current_board[6][0] = Piece("king", "white", "g1")
 			self.current_board[5][0] = Piece("rook", "white", "f1")
@@ -79,19 +83,23 @@ class Game:
 			self.castle_black[0] = False
 		if action[:2] == "a8":
 			self.castle_black[1] = False
+		 
 			
-		else:	
-			try:
-				start_square = algebraic_to_cartesian(action[:2])
-				end_square = algebraic_to_cartesian(action[2:])
-				
-				self.current_board[end_square[0]][end_square[1]] = self.piece_at(action[:2])
-				self.current_board[start_square[0]][start_square[1]] = Piece("Null", "Null", "Null")
-				
-				self.current_board[end_square[0]][end_square[1]].position = action[2:]
+		else:
+		'''
 			
-			except Exception as e:
-				print("\n" + str(e) + "\n")
+		try:
+			start_square = algebraic_to_cartesian(action[:2])
+			end_square = algebraic_to_cartesian(action[2:])
+			
+			self.current_board[end_square[0]][end_square[1]] = self.piece_at(action[:2])
+			self.current_board[start_square[0]][start_square[1]] = Piece("Null", "Null", "Null")
+			
+			self.current_board[end_square[0]][end_square[1]].position = action[2:]
+		
+		except Exception as e:
+			print("Error.")
+			print("\n" + str(e) + "\n")
 		
 		
 	
@@ -128,6 +136,7 @@ class Game:
 		rejected_moves = self.illegal_moves(moves, color)
 		moves = [x for x in moves if x not in rejected_moves]
 		
+		'''
 		if color == "white":
 			if self.castle_white[0] and self.piece_at("f1").piece_type == "Null" and self.piece_at("g1") == "Null":
 				moves.append("e1g1")
@@ -139,5 +148,7 @@ class Game:
 				moves.append("e8g8")
 			if self.castle_black[1] and self.piece-at("b8").piece_type == "Null" and self.piece_at("c8") == "Null" and self.piece_at("d8") == Null:
 				moves.append("e8c8")
+				
+		'''
 		
 		return moves
