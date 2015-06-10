@@ -2,8 +2,9 @@ from chess.utils import *
 from chess.piece import *
 
 class Game:
-	current_board = [[Piece("Null", "Null", "Null") for x in range(8)] for x in range(8)]
+	current_board = None
 	def __init__(self):
+		self.current_board = [[Piece("Null", "Null", "Null") for x in range(8)] for x in range(8)]
 		self.current_board[0][0] = Piece("rook", "white", "a1")
 		self.current_board[1][0] = Piece("knight", "white", "b1")
 		self.current_board[2][0] = Piece("bishop", "white", "c1")
@@ -32,14 +33,13 @@ class Game:
 	
 	def move_piece(self, action):
 		try:
-			start_square = action[:2]
-			end_square = action[2:]
-			
-			start_square = algebraic_to_cartesian(start_square)
-			end_square = algebraic_to_cartesian(end_square)
+			start_square = algebraic_to_cartesian(action[:2])
+			end_square = algebraic_to_cartesian(action[2:])
 			
 			self.current_board[end_square[0]][end_square[1]] = self.piece_at(action[:2])
 			self.current_board[start_square[0]][start_square[1]] = Piece("Null", "Null", "Null")
+			
+			self.current_board[end_square[0]][end_square[1]].position = action[2:]
 		
 		except Exception as e:
 			print("\n" + str(e) + "\n")
