@@ -18,6 +18,9 @@ while True:
 	
 	elif new_move == "?" or new_move == "list" or new_move == "help":
 		print(game.get_all_moves(turn))
+		if game.get_all_moves(turn) == []:
+			print("Checkmate.")
+			exit()0
 		continue
 	
 	elif new_move == "b" or new_move == "board":
