@@ -7,9 +7,15 @@ game = Game()
 turn = "white"
 
 while True:
+	if game.get_all_moves(turn) == []:
+		if turn == "black":
+			print("Checkmate, white is victorious.")
+		if turn == "white":
+			print("Checkmate, black is victorious.")
+		exit()
 	new_move = input(">> ")
 	if new_move == "q" or new_move == "quit" or new_move == "exit":
-		if input("Are you sure? (y/[N])> ").lower() == "y":
+		if input("Are you sure? (y/[N]) >> ").lower() == "y":
 			print("Goodbye.")
 			exit()
 		else:
@@ -18,9 +24,6 @@ while True:
 	
 	elif new_move == "?" or new_move == "list" or new_move == "help":
 		print(game.get_all_moves(turn))
-		if game.get_all_moves(turn) == []:
-			print("Checkmate.")
-			exit()
 		continue
 	
 	elif new_move == "b" or new_move == "board":

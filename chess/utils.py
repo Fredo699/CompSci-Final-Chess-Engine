@@ -59,5 +59,41 @@ def render_board(game):
 		art = art + " " + str(8 - i) + "\n"
 	print(art)
 	print("a b c d e f g h ")
+	
+def render_board_noformat():
+		art = ""
+	board = game.current_board
+	for i in range(0, 8):
+		for j in range(0, 8):
+			if board[j][7 - i].color == "white":
+				if board[j][7 - i].piece_type == "pawn":
+					art = art + "P"
+				if board[j][7 - i].piece_type == "rook":
+					art = art + "R"
+				if board[j][7 - i].piece_type == "knight":
+					art = art + "N"
+				if board[j][7 - i].piece_type == "bishop":
+					art = art + "B"
+				if board[j][7 - i].piece_type == "king":
+					art = art + "K"
+				if board[j][7 - i].piece_type == "queen":
+					art = art + "Q"
+			
+			elif board[j][7 - i].color == "black":
+				if board[j][7 - i].piece_type == "pawn":
+					art = art + "p"
+				if board[j][7 - i].piece_type == "rook":
+					art = art + "r"
+				if board[j][7 - i].piece_type == "knight":
+					art = art + "n"
+				if board[j][7 - i].piece_type == "bishop":
+					art = art + "b"
+				if board[j][7 - i].piece_type == "king":
+					art = art + "k"
+				if board[j][7 - i].piece_type == "queen":
+					art = art + "q"
+			else:
+				art = art + "."
+	return art
 
 #Movement utils

@@ -2,9 +2,11 @@ from chess.utils import *
 from chess.piece import *
 
 class Game:
+	'''
 	current_board = None
 	castle_white = None
 	castle_black = None
+	'''
 	def __init__(self):
 		self.current_board = [[Piece("Null", "Null", "Null") for x in range(8)] for x in range(8)]
 		self.current_board[0][0] = Piece("rook", "white", "a1")
@@ -116,7 +118,6 @@ class Game:
 					break
 		
 		for m in moves_list:
-			target_piece = tmp_game.piece_at(m[2:])
 			tmp_game.move_piece(m)
 			for i in range(0, 8):
 				for p in tmp_game.current_board[i]:
@@ -124,6 +125,7 @@ class Game:
 						moves.append(m)
 						break
 			tmp_game.move_piece(m[2:] + m[:2])
+			
 			restore_target = algebraic_to_cartesian(m[2:])
 			tmp_game.current_board[restore_target[0]][restore_target[1]] = target_piece
 		
