@@ -247,7 +247,7 @@ class Gui:
                 g.autoRefresh_flg = False
 
                 g.posx = x * w + offset
-                g.posy = y * h + 3
+                g.posy = (7-y) * h + 3
                 g.maxx = g.posx + w
                 g.maxy = g.posy + h
 
@@ -277,9 +277,9 @@ class Gui:
                 piece = board[x][y]
 
                 if (x+y)%2==0:
-                    bg = termbox.BLACK
+                    bg = termbox.WHITE
                 else:
-                    bg = termbox.WHITE   
+                    bg = termbox.BLACK   
 
 
                 bg += termbox.BOLD
@@ -356,11 +356,11 @@ class Gui:
                 sys.exit()
 
             if typee == termbox.EVENT_KEY and key == termbox.KEY_ARROW_UP:
-                self.cursor[1] -= 1
+                self.cursor[1] += 1
                 self.moveCursor(self.cursor)
 
             if typee == termbox.EVENT_KEY and key == termbox.KEY_ARROW_DOWN:
-                self.cursor[1] += 1
+                self.cursor[1] -= 1
                 self.moveCursor(self.cursor)
 
             if typee == termbox.EVENT_KEY and key == termbox.KEY_ARROW_LEFT:
