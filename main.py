@@ -6,7 +6,7 @@ from chess.utils import *
 game = Game()
 turn = "white"
 
-mode = "termbox"
+mode = "command"
 
 if mode == "command":
     while True:

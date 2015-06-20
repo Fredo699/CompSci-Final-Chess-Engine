@@ -121,16 +121,17 @@ class Game:
                                         break
                 
                 for m in moves_list:
-                        tmp_game.move_piece(m)
-                        for i in range(0, 8):
-                                for p in tmp_game.current_board[i]:
-                                        if p.color != color and str(p.position + king_position) in p.get_moves(tmp_game):
-                                                moves.append(m)
-                                                break
-                        tmp_game.move_piece(m[2:] + m[:2])
-                        
-                        restore_target = algebraic_to_cartesian(m[2:])
-                        tmp_game.current_board[restore_target[0]][restore_target[1]] = target_piece
+                    target_piece = self.piece_at(m[2:])
+                    tmp_game.move_piece(m)
+                    for i in range(0, 8):
+                            for p in tmp_game.current_board[i]:
+                                    if p.color != color and str(p.position + king_position) in p.get_moves(tmp_game):
+                                            moves.append(m)
+                                            break
+                    tmp_game.move_piece(m[2:] + m[:2])
+                    
+                    restore_target = algebraic_to_cartesian(m[2:])
+                    tmp_game.current_board[restore_target[0]][restore_target[1]] = target_piece
                 
                 return moves
 
