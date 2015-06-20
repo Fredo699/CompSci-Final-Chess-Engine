@@ -1,12 +1,6 @@
+#! /usr/bin/python
 
-
-import time, os, curses, shutil, sys, random
-import math
-from termcolor import cprint
-from multiprocessing import Process
-import termbox
-from optparse import OptionParser
-import rpyc
+import time, os, shutil, sys, random, math, termbox
 
 class FTF:
     current = None
